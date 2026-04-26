@@ -1,0 +1,34 @@
+# Dependencies (any depth)
+node_modules/
+**/node_modules/
+
+# Nuxt build / cache outputs (any depth)
+**/.nuxt/
+**/.output/
+**/.nitro/
+**/.cache/
+**/.data/
+**/dist/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.fleet/
+
+# Claude — keep shared skills/settings, ignore local-only overrides
+.claude/settings.local.json
