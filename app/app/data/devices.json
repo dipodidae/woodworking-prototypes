@@ -1,0 +1,174 @@
+{
+  "beatstep-pro": {
+    "label": "Arturia Beatstep Pro",
+    "w": 41.5,
+    "d": 15.3,
+    "h": 4,
+    "category": "controller",
+    "power": { "type": "usb", "face": "back", "offset": 0.9 },
+    "ports": [
+      { "id": "midi-out", "type": "midi", "face": "back", "offset": 0.3 },
+      { "id": "midi-in", "type": "midi", "face": "back", "offset": 0.4 },
+      { "id": "cv-1", "type": "cv", "face": "back", "offset": 0.5 },
+      { "id": "cv-2", "type": "cv", "face": "back", "offset": 0.55 },
+      { "id": "cv-3", "type": "cv", "face": "back", "offset": 0.6 },
+      { "id": "cv-4", "type": "cv", "face": "back", "offset": 0.65 },
+      { "id": "cv-5", "type": "cv", "face": "back", "offset": 0.7 },
+      { "id": "cv-6", "type": "cv", "face": "back", "offset": 0.75 },
+      { "id": "cv-7", "type": "cv", "face": "back", "offset": 0.8 },
+      { "id": "cv-8", "type": "cv", "face": "back", "offset": 0.85 },
+      { "id": "usb", "type": "usb", "face": "back", "offset": 0.9 }
+    ]
+  },
+  "tr-8s": {
+    "label": "Roland TR-8S",
+    "w": 40.8,
+    "d": 25.5,
+    "h": 7,
+    "category": "rhythm",
+    "power": { "type": "barrel", "face": "back", "offset": 0.95 },
+    "ports": [
+      { "id": "midi-in", "type": "midi", "face": "back", "offset": 0.1 },
+      { "id": "midi-out", "type": "midi", "face": "back", "offset": 0.15 },
+      { "id": "midi-thru", "type": "midi", "face": "back", "offset": 0.2 },
+      { "id": "mix-out-l", "type": "audio", "face": "back", "offset": 0.35 },
+      { "id": "mix-out-r", "type": "audio", "face": "back", "offset": 0.4 },
+      { "id": "assign-out", "type": "audio", "face": "back", "offset": 0.5 },
+      { "id": "ext-in", "type": "audio", "face": "back", "offset": 0.6 },
+      { "id": "phones", "type": "audio", "face": "back", "offset": 0.7 },
+      { "id": "usb", "type": "usb", "face": "back", "offset": 0.8 }
+    ]
+  },
+  "ms20-mini": {
+    "label": "Korg MS20 Mini",
+    "w": 49,
+    "d": 25.5,
+    "h": 20.5,
+    "category": "synth",
+    "power": { "type": "barrel", "face": "back", "offset": 0.95 },
+    "ports": [
+      { "id": "audio-out", "type": "audio", "face": "back", "offset": 0.1 },
+      { "id": "phones", "type": "audio", "face": "back", "offset": 0.2 },
+      { "id": "ext-in", "type": "audio", "face": "back", "offset": 0.3 },
+      { "id": "midi-in", "type": "midi", "face": "back", "offset": 0.5 },
+      { "id": "usb", "type": "usb", "face": "back", "offset": 0.6 },
+      { "id": "cv-in-total", "type": "cv", "face": "top", "offset": 0.5 }
+    ]
+  },
+  "behringer-m": {
+    "label": "Behringer M",
+    "w": 37,
+    "d": 13.5,
+    "h": 8,
+    "category": "synth",
+    "power": { "type": "barrel", "face": "back", "offset": 0.95 },
+    "ports": [
+      { "id": "audio-out", "type": "audio", "face": "back", "offset": 0.1 },
+      { "id": "phones", "type": "audio", "face": "back", "offset": 0.2 },
+      { "id": "ext-in", "type": "audio", "face": "back", "offset": 0.3 },
+      { "id": "midi-in", "type": "midi", "face": "back", "offset": 0.5 },
+      { "id": "cv-in", "type": "cv", "face": "back", "offset": 0.65 },
+      { "id": "gate-in", "type": "cv", "face": "back", "offset": 0.7 },
+      { "id": "usb", "type": "usb", "face": "back", "offset": 0.85 }
+    ]
+  },
+  "ditto-x4": {
+    "label": "Ditto X4",
+    "w": 23,
+    "d": 13.5,
+    "h": 6,
+    "category": "looper",
+    "power": { "type": "9v-barrel", "face": "back", "offset": 0.9 },
+    "ports": [
+      { "id": "in-l", "type": "audio", "face": "back", "offset": 0.15 },
+      { "id": "in-r", "type": "audio", "face": "back", "offset": 0.25 },
+      { "id": "out-l", "type": "audio", "face": "back", "offset": 0.5 },
+      { "id": "out-r", "type": "audio", "face": "back", "offset": 0.6 },
+      { "id": "midi-in", "type": "midi", "face": "back", "offset": 0.75 }
+    ]
+  },
+  "patchbay": {
+    "label": "Patch Bay",
+    "w": 43.8,
+    "d": 5.2,
+    "h": 4.6,
+    "category": "routing",
+    "power": null,
+    "ports": [
+      { "id": "front-row", "type": "audio", "face": "top", "offset": 0.5, "count": 24 },
+      { "id": "rear-row", "type": "audio", "face": "back", "offset": 0.5, "count": 24 }
+    ]
+  },
+  "polytune": {
+    "label": "PolyTune",
+    "w": 6.4,
+    "d": 12.4,
+    "h": 3.2,
+    "category": "tuner",
+    "power": { "type": "9v-barrel", "face": "back", "offset": 0.5 },
+    "ports": [
+      { "id": "in", "type": "audio", "face": "right", "offset": 0.5 },
+      { "id": "out", "type": "audio", "face": "left", "offset": 0.5 }
+    ]
+  },
+  "boss-compact": {
+    "label": "Boss Compact",
+    "w": 7.3,
+    "d": 12.9,
+    "h": 5.8,
+    "category": "pedal",
+    "power": { "type": "9v-barrel", "face": "back", "offset": 0.5 },
+    "ports": [
+      { "id": "in", "type": "audio", "face": "right", "offset": 0.5 },
+      { "id": "out", "type": "audio", "face": "left", "offset": 0.5 }
+    ]
+  },
+  "mxr-standard": {
+    "label": "MXR Standard",
+    "w": 6.4,
+    "d": 11.2,
+    "h": 5.3,
+    "category": "pedal",
+    "power": { "type": "9v-barrel", "face": "back", "offset": 0.5 },
+    "ports": [
+      { "id": "in", "type": "audio", "face": "right", "offset": 0.5 },
+      { "id": "out", "type": "audio", "face": "left", "offset": 0.5 }
+    ]
+  },
+  "ehx-nano": {
+    "label": "EHX Nano",
+    "w": 7.0,
+    "d": 11.2,
+    "h": 5.5,
+    "category": "pedal",
+    "power": { "type": "9v-barrel", "face": "back", "offset": 0.5 },
+    "ports": [
+      { "id": "in", "type": "audio", "face": "right", "offset": 0.5 },
+      { "id": "out", "type": "audio", "face": "left", "offset": 0.5 }
+    ]
+  },
+  "tc-mini": {
+    "label": "TC Mini",
+    "w": 5.0,
+    "d": 9.3,
+    "h": 5.1,
+    "category": "pedal",
+    "power": { "type": "9v-barrel", "face": "back", "offset": 0.5 },
+    "ports": [
+      { "id": "in", "type": "audio", "face": "right", "offset": 0.5 },
+      { "id": "out", "type": "audio", "face": "left", "offset": 0.5 }
+    ]
+  },
+  "strymon-standard": {
+    "label": "Strymon Standard",
+    "w": 10.4,
+    "d": 12.7,
+    "h": 5.7,
+    "category": "pedal",
+    "power": { "type": "9v-barrel", "face": "back", "offset": 0.5 },
+    "ports": [
+      { "id": "in", "type": "audio", "face": "right", "offset": 0.5 },
+      { "id": "out", "type": "audio", "face": "left", "offset": 0.5 }
+    ]
+  }
+}

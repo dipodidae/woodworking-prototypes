@@ -1,0 +1,61 @@
+{
+  "id": "synth-allinone",
+  "label": "03 — All-in-one cabinet",
+  "description": "Compact 4-zone cabinet with built-in pedal bay and patch spine.",
+
+  "profile": {
+    "style": "performance-wedge",
+    "aggressiveness": 0.7,
+    "smoothness": "stepped"
+  },
+
+  "zones": [
+    { "type": "controller", "devices": ["beatstep-pro"], "focus": "secondary" },
+    { "type": "rhythm", "devices": ["tr-8s"], "focus": "primary" },
+    { "type": "synth", "devices": ["ms20-mini", "behringer-m"], "focus": "secondary" },
+    { "type": "looper", "devices": ["ditto-x4"], "focus": "none" },
+    {
+      "type": "pedals",
+      "mode": "deck",
+      "focus": "none",
+      "pedals": { "layout": "staggered", "anchor": "left", "density": "medium", "rows": 1 }
+    },
+    { "type": "routing", "devices": ["patchbay", "polytune"], "mount": "spine-right" }
+  ],
+
+  "composition": {
+    "align": "balanced",
+    "spacing": "breathing",
+    "symmetry": 0.4
+  },
+
+  "connectivity": [
+    { "from": "beatstep-pro/midi-out", "to": "tr-8s/midi-in", "type": "midi" },
+    { "from": "tr-8s/midi-thru", "to": "ms20-mini/midi-in", "type": "midi" },
+    { "from": "ms20-mini/midi-in", "to": "behringer-m/midi-in", "type": "midi" },
+    { "from": "beatstep-pro/cv-1", "to": "ms20-mini/cv-in-total", "type": "cv" },
+    { "from": "beatstep-pro/cv-2", "to": "behringer-m/cv-in", "type": "cv" },
+    { "from": "beatstep-pro/cv-3", "to": "behringer-m/gate-in", "type": "cv" },
+    { "from": "ms20-mini/audio-out", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "behringer-m/audio-out", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "tr-8s/mix-out-l", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "tr-8s/mix-out-r", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "ditto-x4/out-l", "to": "patchbay/rear-row", "type": "audio" }
+  ],
+
+  "power": {
+    "strip": { "position": "rear-bottom", "outlets": 6 },
+    "routing": "rear-trench"
+  },
+
+  "constraints": {
+    "maxWidth": 100,
+    "maxDepth": 55,
+    "maxHeight": 70,
+    "thickness": 1.8,
+    "rearClearance": 6,
+    "maxReachDepth": 45,
+    "minClearanceAboveDevice": 4,
+    "cableDrop": true
+  }
+}

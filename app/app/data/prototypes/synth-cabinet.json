@@ -1,0 +1,59 @@
+{
+  "id": "synth-cabinet",
+  "label": "02 — Synth cabinet",
+  "description": "Wooden cabinet for synths with separate pedal tray.",
+
+  "profile": {
+    "style": "studio-console",
+    "aggressiveness": 0.4,
+    "smoothness": "angular"
+  },
+
+  "zones": [
+    { "type": "synth", "devices": ["ms20-mini", "behringer-m"], "focus": "secondary" },
+    { "type": "routing", "devices": ["patchbay"], "mount": "mid-shelf", "focus": "none" },
+    { "type": "controller", "devices": ["beatstep-pro"], "focus": "secondary" },
+    { "type": "rhythm", "devices": ["tr-8s"], "focus": "primary" },
+    {
+      "type": "pedals",
+      "mode": "tray-separate",
+      "focus": "none",
+      "devices": ["ditto-x4", "polytune"],
+      "pedals": { "layout": "grid", "anchor": "left", "density": "tight", "rows": 1 }
+    }
+  ],
+
+  "composition": {
+    "align": "weighted-left",
+    "spacing": "tight",
+    "symmetry": 0.2
+  },
+
+  "connectivity": [
+    { "from": "beatstep-pro/midi-out", "to": "tr-8s/midi-in", "type": "midi" },
+    { "from": "tr-8s/midi-thru", "to": "ms20-mini/midi-in", "type": "midi" },
+    { "from": "ms20-mini/midi-in", "to": "behringer-m/midi-in", "type": "midi" },
+    { "from": "beatstep-pro/cv-1", "to": "ms20-mini/cv-in-total", "type": "cv" },
+    { "from": "beatstep-pro/cv-2", "to": "behringer-m/cv-in", "type": "cv" },
+    { "from": "ms20-mini/audio-out", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "behringer-m/audio-out", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "tr-8s/mix-out-l", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "tr-8s/mix-out-r", "to": "patchbay/rear-row", "type": "audio" }
+  ],
+
+  "power": {
+    "strip": { "position": "rear-bottom", "outlets": 4 },
+    "routing": "rear-drop"
+  },
+
+  "constraints": {
+    "maxWidth": 100,
+    "maxDepth": 30,
+    "maxHeight": 48,
+    "thickness": 1.8,
+    "rearClearance": 0,
+    "maxReachDepth": 30,
+    "minClearanceAboveDevice": 2,
+    "cableDrop": true
+  }
+}
