@@ -1,5 +1,8 @@
 import synthCabinet from '~/data/prototypes/synth-cabinet.json'
 import synthAllinone from '~/data/prototypes/synth-allinone.json'
+import synthPlinth from '~/data/prototypes/synth-plinth.json'
+import synthConsole from '~/data/prototypes/synth-console.json'
+import synthTouring from '~/data/prototypes/synth-touring.json'
 
 export interface Prototype {
   id: string
@@ -8,7 +11,7 @@ export interface Prototype {
   to: string
 }
 
-const configs = [synthCabinet, synthAllinone]
+const configs = [synthCabinet, synthAllinone, synthPlinth, synthConsole, synthTouring]
 
 const prototypes: Prototype[] = [
   {

@@ -1,0 +1,46 @@
+{
+  "id": "synth-plinth",
+  "label": "04 — Brutalist plinth",
+  "description": "Tall narrow performance plinth — TR-8S on top, Behringer M underneath, everything tilted hard at the player.",
+
+  "profile": {
+    "style": "brutalist",
+    "aggressiveness": 0.9,
+    "smoothness": "angular"
+  },
+
+  "zones": [
+    { "type": "synth", "devices": ["behringer-m"], "focus": "secondary" },
+    { "type": "rhythm", "devices": ["tr-8s"], "focus": "primary" },
+    { "type": "routing", "devices": ["patchbay"], "mount": "mid-shelf", "focus": "none" }
+  ],
+
+  "composition": {
+    "align": "center",
+    "spacing": "tight",
+    "symmetry": 0.85
+  },
+
+  "connectivity": [
+    { "from": "tr-8s/midi-out", "to": "behringer-m/midi-in", "type": "midi" },
+    { "from": "behringer-m/audio-out", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "tr-8s/mix-out-l", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "tr-8s/mix-out-r", "to": "patchbay/rear-row", "type": "audio" }
+  ],
+
+  "power": {
+    "strip": { "position": "rear-bottom", "outlets": 3 },
+    "routing": "rear-drop"
+  },
+
+  "constraints": {
+    "maxWidth": 50,
+    "maxDepth": 38,
+    "maxHeight": 80,
+    "thickness": 2.4,
+    "rearClearance": 4,
+    "maxReachDepth": 30,
+    "minClearanceAboveDevice": 4,
+    "cableDrop": true
+  }
+}

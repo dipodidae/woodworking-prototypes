@@ -1,0 +1,58 @@
+{
+  "id": "synth-touring",
+  "label": "06 — Touring rig",
+  "description": "Compact stackable touring case — Beatstep + Behringer + Ditto, near-flat for transport.",
+
+  "profile": {
+    "style": "compact-block",
+    "aggressiveness": 0.5,
+    "smoothness": "stepped"
+  },
+
+  "zones": [
+    { "type": "controller", "devices": ["beatstep-pro"], "focus": "primary" },
+    { "type": "synth", "devices": ["behringer-m"], "focus": "secondary" },
+    { "type": "looper", "devices": ["ditto-x4"], "focus": "none" },
+    { "type": "routing", "devices": ["patchbay"], "mount": "mid-shelf", "focus": "none" },
+    {
+      "type": "pedals",
+      "mode": "tray-separate",
+      "focus": "none",
+      "devices": ["polytune", "tc-mini"],
+      "pedals": { "layout": "grid", "anchor": "center", "density": "tight", "rows": 1 }
+    }
+  ],
+
+  "composition": {
+    "align": "center",
+    "spacing": "tight",
+    "symmetry": 0.65
+  },
+
+  "connectivity": [
+    { "from": "beatstep-pro/midi-out", "to": "behringer-m/midi-in", "type": "midi" },
+    { "from": "beatstep-pro/cv-1", "to": "behringer-m/cv-in", "type": "cv" },
+    { "from": "beatstep-pro/cv-2", "to": "behringer-m/gate-in", "type": "cv" },
+    { "from": "behringer-m/audio-out", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "patchbay/front-row", "to": "polytune/in", "type": "audio" },
+    { "from": "polytune/out", "to": "tc-mini/in", "type": "audio" },
+    { "from": "tc-mini/out", "to": "ditto-x4/in-l", "type": "audio" },
+    { "from": "ditto-x4/out-l", "to": "patchbay/rear-row", "type": "audio" }
+  ],
+
+  "power": {
+    "strip": { "position": "rear-bottom", "outlets": 4 },
+    "routing": "rear-drop"
+  },
+
+  "constraints": {
+    "maxWidth": 60,
+    "maxDepth": 28,
+    "maxHeight": 45,
+    "thickness": 1.5,
+    "rearClearance": 3,
+    "maxReachDepth": 24,
+    "minClearanceAboveDevice": 2,
+    "cableDrop": true
+  }
+}

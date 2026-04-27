@@ -1,0 +1,68 @@
+{
+  "id": "synth-console",
+  "label": "05 — Studio console",
+  "description": "Wide low desk-style console with breathing space, full pedalboard deck and right-spine routing.",
+
+  "profile": {
+    "style": "studio-console",
+    "aggressiveness": 0.3,
+    "smoothness": "smooth"
+  },
+
+  "zones": [
+    { "type": "controller", "devices": ["beatstep-pro"], "focus": "secondary" },
+    { "type": "rhythm", "devices": ["tr-8s"], "focus": "primary" },
+    { "type": "synth", "devices": ["ms20-mini", "behringer-m"], "focus": "secondary" },
+    { "type": "looper", "devices": ["ditto-x4"], "focus": "none" },
+    {
+      "type": "pedals",
+      "mode": "deck",
+      "focus": "none",
+      "devices": ["boss-compact", "mxr-standard", "ehx-nano", "strymon-standard", "tc-mini"],
+      "pedals": { "layout": "grid", "anchor": "center", "density": "medium", "rows": 1 }
+    },
+    { "type": "routing", "devices": ["patchbay", "polytune"], "mount": "spine-right", "focus": "none" }
+  ],
+
+  "composition": {
+    "align": "balanced",
+    "spacing": "breathing",
+    "symmetry": 0.85
+  },
+
+  "connectivity": [
+    { "from": "beatstep-pro/midi-out", "to": "tr-8s/midi-in", "type": "midi" },
+    { "from": "tr-8s/midi-thru", "to": "ms20-mini/midi-in", "type": "midi" },
+    { "from": "ms20-mini/midi-in", "to": "behringer-m/midi-in", "type": "midi" },
+    { "from": "beatstep-pro/cv-1", "to": "ms20-mini/cv-in-total", "type": "cv" },
+    { "from": "beatstep-pro/cv-2", "to": "behringer-m/cv-in", "type": "cv" },
+    { "from": "beatstep-pro/cv-3", "to": "behringer-m/gate-in", "type": "cv" },
+    { "from": "ms20-mini/audio-out", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "behringer-m/audio-out", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "tr-8s/mix-out-l", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "tr-8s/mix-out-r", "to": "patchbay/rear-row", "type": "audio" },
+    { "from": "patchbay/front-row", "to": "boss-compact/in", "type": "audio" },
+    { "from": "boss-compact/out", "to": "mxr-standard/in", "type": "audio" },
+    { "from": "mxr-standard/out", "to": "ehx-nano/in", "type": "audio" },
+    { "from": "ehx-nano/out", "to": "strymon-standard/in", "type": "audio" },
+    { "from": "strymon-standard/out", "to": "polytune/in", "type": "audio" },
+    { "from": "polytune/out", "to": "patchbay/front-row", "type": "audio" },
+    { "from": "ditto-x4/out-l", "to": "patchbay/rear-row", "type": "audio" }
+  ],
+
+  "power": {
+    "strip": { "position": "rear-bottom", "outlets": 8 },
+    "routing": "rear-trench"
+  },
+
+  "constraints": {
+    "maxWidth": 130,
+    "maxDepth": 60,
+    "maxHeight": 75,
+    "thickness": 1.8,
+    "rearClearance": 7,
+    "maxReachDepth": 50,
+    "minClearanceAboveDevice": 5,
+    "cableDrop": true
+  }
+}
