@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { Shape, ExtrudeGeometry, Vector2, CatmullRomCurve3, TubeGeometry } from 'three'
-import { useDesignEngine, type PrototypeConfig, type ResolvedCable } from '~/composables/useDesignEngine'
+import { useDesignCompiler } from '~/composables/useDesignCompiler'
+import type { PrototypeConfig, ResolvedCable } from '~/composables/useDesignEngine'
 
 const props = defineProps<{
   config: PrototypeConfig
 }>()
 
-const { layout } = useDesignEngine(computed(() => props.config))
+const { layout, score, diagnostics } = useDesignCompiler(computed(() => props.config))
 
 const showCables = ref(true)
+const beautyMode = ref(true)
 
-const WOOD = '#caa472'
-const GHOST = '#ff00ff'
-const GHOST_OPACITY = 0.38
+const WOOD = '#c28a4a'
 const POWER_STRIP_COLOR = '#333333'
 
 // Build side-wall ExtrudeGeometry from profile points
@@ -33,7 +33,10 @@ function buildSideWallGeometry(points: Vector2[], thickness: number, _side: 'lef
 
   const geo = new ExtrudeGeometry(shape, {
     depth: thickness,
-    bevelEnabled: false
+    bevelEnabled: true,
+    bevelThickness: 0.001,
+    bevelSize: 0.0008,
+    bevelSegments: 2
   })
 
   return geo
@@ -71,13 +74,12 @@ function buildCableGeometry(cable: ResolvedCable) {
 </script>
 
 <template>
-  <div class="h-[calc(100vh-var(--ui-header-height,4rem))] w-full relative">
+  <div class="cabinet-stage h-[calc(100vh-var(--ui-header-height,4rem))] w-full relative">
     <ClientOnly>
       <TresCanvas
-        clear-color="#0b0b0c"
+        clear-color="#3d3631"
         window-size
         shadows
-        alpha
       >
         <TresPerspectiveCamera
           :position="layout.camera.position"
@@ -88,28 +90,20 @@ function buildCableGeometry(cable: ResolvedCable) {
         />
         <OrbitControls :target="layout.camera.target" />
 
-        <TresAmbientLight :intensity="0.4" />
+        <TresAmbientLight :intensity="0.15" />
         <TresDirectionalLight
-          :position="[1.6, 2.2, 1.5]"
-          :intensity="1.15"
+          :position="[2.0, 3.8, 2.2]"
+          :intensity="1.6"
           cast-shadow
         />
         <TresDirectionalLight
-          :position="[-1.4, 1.6, 0.9]"
-          :intensity="0.4"
+          :position="[-2.5, 1.2, 1.5]"
+          :intensity="0.32"
         />
-
-        <!-- Floor -->
-        <TresMesh
-          :rotation="[-Math.PI / 2, 0, 0]"
-          receive-shadow
-        >
-          <TresPlaneGeometry :args="[8, 8]" />
-          <TresMeshStandardMaterial
-            color="#1a1a1c"
-            :roughness="1"
-          />
-        </TresMesh>
+        <TresDirectionalLight
+          :position="[-0.8, 2.2, -2.8]"
+          :intensity="0.55"
+        />
 
         <!-- Carcass panels (bottom, top, shelves, back) -->
         <TresMesh
@@ -122,7 +116,8 @@ function buildCableGeometry(cable: ResolvedCable) {
           <TresBoxGeometry :args="p.size" />
           <TresMeshStandardMaterial
             :color="WOOD"
-            :roughness="0.7"
+            :roughness="0.82"
+            :metalness="0.01"
           />
         </TresMesh>
 
@@ -130,7 +125,7 @@ function buildCableGeometry(cable: ResolvedCable) {
         <TresMesh
           v-if="leftWallGeo"
           :position="leftWallPosition"
-          :rotation="[Math.PI / 2, -Math.PI / 2, 0]"
+          :rotation="[0, Math.PI / 2, 0]"
           cast-shadow
           receive-shadow
         >
@@ -140,14 +135,15 @@ function buildCableGeometry(cable: ResolvedCable) {
           />
           <TresMeshStandardMaterial
             :color="WOOD"
-            :roughness="0.7"
+            :roughness="0.82"
+            :metalness="0.01"
           />
         </TresMesh>
 
         <TresMesh
           v-if="rightWallGeo"
           :position="rightWallPosition"
-          :rotation="[Math.PI / 2, -Math.PI / 2, 0]"
+          :rotation="[0, Math.PI / 2, 0]"
           cast-shadow
           receive-shadow
         >
@@ -157,7 +153,8 @@ function buildCableGeometry(cable: ResolvedCable) {
           />
           <TresMeshStandardMaterial
             :color="WOOD"
-            :roughness="0.7"
+            :roughness="0.82"
+            :metalness="0.01"
           />
         </TresMesh>
 
@@ -168,19 +165,12 @@ function buildCableGeometry(cable: ResolvedCable) {
         >
           <!-- Spine-mounted devices (no group transform, world-space positions) -->
           <template v-if="zone.isSpine">
-            <TresMesh
+            <DeviceMesh
               v-for="dev in zone.devices"
               :key="dev.id"
-              :position="dev.position"
-              :rotation="dev.rotation"
-            >
-              <TresBoxGeometry :args="dev.size" />
-              <TresMeshStandardMaterial
-                :color="GHOST"
-                :transparent="true"
-                :opacity="GHOST_OPACITY"
-              />
-            </TresMesh>
+              :device="dev"
+              :beauty="beautyMode"
+            />
           </template>
 
           <!-- Regular stacked zones & separate trays -->
@@ -199,7 +189,8 @@ function buildCableGeometry(cable: ResolvedCable) {
               <TresBoxGeometry :args="zone.deckSize" />
               <TresMeshStandardMaterial
                 :color="WOOD"
-                :roughness="0.7"
+                :roughness="0.82"
+                :metalness="0.01"
               />
             </TresMesh>
 
@@ -213,7 +204,8 @@ function buildCableGeometry(cable: ResolvedCable) {
               <TresBoxGeometry :args="zone.lipSize" />
               <TresMeshStandardMaterial
                 :color="WOOD"
-                :roughness="0.7"
+                :roughness="0.82"
+                :metalness="0.01"
               />
             </TresMesh>
 
@@ -221,7 +213,6 @@ function buildCableGeometry(cable: ResolvedCable) {
             <template v-if="zone.subPlatform">
               <TresGroup
                 :position="[0, 0, -0.03]"
-                :rotation="[0.1745, 0.2094, 0]"
               >
                 <TresMesh
                   :position="zone.subPlatform.deckPosition"
@@ -231,7 +222,8 @@ function buildCableGeometry(cable: ResolvedCable) {
                   <TresBoxGeometry :args="zone.subPlatform.deckSize" />
                   <TresMeshStandardMaterial
                     :color="WOOD"
-                    :roughness="0.7"
+                    :roughness="0.82"
+                    :metalness="0.01"
                   />
                 </TresMesh>
 
@@ -244,7 +236,8 @@ function buildCableGeometry(cable: ResolvedCable) {
                   <TresBoxGeometry :args="zone.subPlatform.lipSize" />
                   <TresMeshStandardMaterial
                     :color="WOOD"
-                    :roughness="0.7"
+                    :roughness="0.82"
+                    :metalness="0.01"
                   />
                 </TresMesh>
 
@@ -259,40 +252,29 @@ function buildCableGeometry(cable: ResolvedCable) {
                   <TresBoxGeometry :args="stop.size" />
                   <TresMeshStandardMaterial
                     :color="WOOD"
-                    :roughness="0.7"
+                    :roughness="0.82"
+                    :metalness="0.01"
                   />
                 </TresMesh>
 
                 <!-- Primary device ghost on sub-platform -->
-                <TresMesh
+                <DeviceMesh
                   v-for="dev in zone.devices"
                   :key="dev.id"
-                  :position="dev.position"
-                >
-                  <TresBoxGeometry :args="dev.size" />
-                  <TresMeshStandardMaterial
-                    :color="GHOST"
-                    :transparent="true"
-                    :opacity="GHOST_OPACITY"
-                  />
-                </TresMesh>
+                  :device="dev"
+                  :beauty="beautyMode"
+                />
               </TresGroup>
             </template>
 
             <!-- Regular devices (no sub-platform) -->
             <template v-if="!zone.subPlatform">
-              <TresMesh
+              <DeviceMesh
                 v-for="dev in zone.devices"
                 :key="dev.id"
-                :position="dev.position"
-              >
-                <TresBoxGeometry :args="dev.size" />
-                <TresMeshStandardMaterial
-                  :color="GHOST"
-                  :transparent="true"
-                  :opacity="GHOST_OPACITY"
-                />
-              </TresMesh>
+                :device="dev"
+                :beauty="beautyMode"
+              />
             </template>
           </TresGroup>
         </template>
@@ -372,10 +354,42 @@ function buildCableGeometry(cable: ResolvedCable) {
         </template>
       </ul>
 
+      <!-- Design score -->
+      <div class="mt-2 border-t border-white/10 pt-2">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-semibold">Design score</span>
+          <span
+            class="text-[11px] font-mono font-bold"
+            :class="score.total >= 80 ? 'text-emerald-400' : score.total >= 60 ? 'text-amber-300' : 'text-red-400'"
+          >{{ score.total }}/100</span>
+        </div>
+        <div class="mt-0.5 flex gap-2 flex-wrap text-[10px] text-white/50">
+          <span>align {{ Math.round(score.alignment * 100) }}%</span>
+          <span>spacing {{ Math.round(score.spacing * 100) }}%</span>
+          <span>sym {{ Math.round(score.symmetry * 100) }}%</span>
+          <span>ergo {{ Math.round(score.ergonomics * 100) }}%</span>
+        </div>
+      </div>
+
+      <!-- Compiler diagnostics -->
+      <div
+        v-if="diagnostics.length > 0"
+        class="mt-1.5 space-y-0.5"
+      >
+        <div
+          v-for="(d, i) in diagnostics"
+          :key="i"
+          class="text-[10px] leading-snug"
+          :class="d.level === 'error' ? 'text-red-300' : d.level === 'warn' ? 'text-amber-200/80' : 'text-sky-300/70'"
+        >
+          {{ d.level === 'error' ? '✖' : d.level === 'warn' ? '△' : 'ℹ' }} {{ d.message }}
+        </div>
+      </div>
+
       <!-- Ergonomics warnings -->
       <div
         v-if="layout.warnings.length > 0"
-        class="mt-2 border-t border-white/10 pt-2"
+        class="mt-1.5 border-t border-white/10 pt-1.5"
       >
         <div
           v-for="(w, i) in layout.warnings"
@@ -388,8 +402,8 @@ function buildCableGeometry(cable: ResolvedCable) {
       </div>
     </div>
 
-    <!-- Cable toggle -->
-    <div class="absolute bottom-3 left-3">
+    <!-- View controls -->
+    <div class="absolute bottom-3 left-3 flex gap-2">
       <UButton
         :label="showCables ? 'Hide cables' : 'Show cables'"
         size="xs"
@@ -398,6 +412,27 @@ function buildCableGeometry(cable: ResolvedCable) {
         class="pointer-events-auto"
         @click="showCables = !showCables"
       />
+      <UButton
+        :label="beautyMode ? 'Debug view' : 'Beauty view'"
+        size="xs"
+        variant="subtle"
+        icon="i-lucide-sparkles"
+        class="pointer-events-auto"
+        @click="beautyMode = !beautyMode"
+      />
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Subtle vignette layered above the canvas. The canvas itself paints a warm
+   slate via clear-color (#3d3631); this overlay just darkens the corners so
+   the cabinet sits in a soft "spotlight" without the rest going pure black. */
+.cabinet-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 75% 70% at 55% 55%, transparent 40%, rgba(0, 0, 0, 0.45) 100%);
+}
+</style>

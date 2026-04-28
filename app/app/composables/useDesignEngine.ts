@@ -1,6 +1,5 @@
-import { computed, type Ref } from 'vue'
 import { MathUtils, Vector2, Vector3 } from 'three'
-import deviceCatalog from '~/data/devices.json'
+import deviceCatalog from '../data/devices.json'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -612,9 +611,11 @@ function generateProfile(
     currentY = shelfY + z.height
   }
 
-  // Top shelf
+  // Top shelf — must be at least as inset as the last stacked shelf,
+  // otherwise the side-wall polygon kinks back outward and self-intersects.
+  const lastFrontZ = points.length > 1 ? points[points.length - 1]!.x : 0
   const topY = currentY + T
-  const topFrontZ = a * maxD * 0.25
+  const topFrontZ = Math.max(lastFrontZ, a * maxD * 0.25)
   const clampedTopZ = Math.min(topFrontZ, maxD - rearC - 8)
   points.push(new Vector2(clampedTopZ, topY))
 
@@ -922,7 +923,7 @@ function computeCamera(
 
 // ─── Main resolve function ───────────────────────────────────────────────────
 
-function resolveLayout(config: PrototypeConfig): ResolvedLayout {
+export function resolveLayout(config: PrototypeConfig): ResolvedLayout {
   const T = config.constraints.thickness
   const CAB_W = config.constraints.maxWidth
   const CAB_D = config.constraints.maxDepth
@@ -1149,9 +1150,16 @@ function resolveLayout(config: PrototypeConfig): ResolvedLayout {
     }
 
     if (z.mount === 'mid-shelf' && z.devices) {
-      // Mid-shelf mounted (e.g., patchbay flat on a shelf)
-      const midShelfIdx = Math.floor(stackable.length / 2)
-      const shelfY = (midShelfIdx < shelfYPositions.length ? shelfYPositions[midShelfIdx] : shelfYPositions[shelfYPositions.length - 1]) ?? 0
+      // Mid-shelf mounted (e.g., patchbay sitting on top of a middle shelf,
+      // angled like a reading stand toward the user — front of cabinet).
+      // shelfYPositions[i] is the TOP of shelf i. Index 0 = bottom panel top,
+      // last = top panel top. We want a shelf above ~half the stack.
+      const midShelfIdx = Math.max(1, Math.min(shelfYPositions.length - 2, Math.floor(stackable.length / 2)))
+      const shelfY = shelfYPositions[midShelfIdx] ?? 0
+
+      // Lay the device flat on that shelf, centered, near the FRONT (chair side)
+      // with a small front margin so it doesn't cantilever off the shelf edge.
+      const FRONT_MARGIN_CM = 2
 
       const devices: ResolvedDevice[] = []
       for (const devId of z.devices) {
@@ -1161,7 +1169,7 @@ function resolveLayout(config: PrototypeConfig): ResolvedLayout {
           deviceId: devId,
           label: d.label,
           size: [d.w * CM, d.h * CM, d.d * CM],
-          position: [0, (shelfY + T + d.h / 2) * CM, -(CAB_D - 5 - d.d / 2) * CM],
+          position: [0, (shelfY + d.h / 2) * CM, -(FRONT_MARGIN_CM + d.d / 2) * CM],
           rotation: [0, 0, 0],
           category: d.category,
           isGhost: true,
@@ -1300,15 +1308,4 @@ function resolveLayout(config: PrototypeConfig): ResolvedLayout {
     warnings,
     config
   }
-}
-
-// ─── Composable ──────────────────────────────────────────────────────────────
-
-export function useDesignEngine(config: Ref<PrototypeConfig> | PrototypeConfig) {
-  const layout = computed(() => {
-    const cfg = 'value' in config ? config.value : config
-    return resolveLayout(cfg)
-  })
-
-  return { layout }
 }

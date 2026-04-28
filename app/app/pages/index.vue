@@ -14,6 +14,27 @@ const prototypes = usePrototypes()
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Design compiler entry -->
+      <NuxtLink
+        to="/prototypes/generate"
+        class="block"
+      >
+        <UCard class="hover:ring-2 hover:ring-primary/50 transition border-dashed">
+          <div class="flex items-center gap-2">
+            <UIcon
+              name="i-lucide-cpu"
+              class="text-primary size-4 shrink-0"
+            />
+            <h2 class="font-semibold">
+              Generate from prompt
+            </h2>
+          </div>
+          <p class="text-muted text-sm mt-1">
+            Describe your setup in plain language — the design compiler turns it into a 3D cabinet.
+          </p>
+        </UCard>
+      </NuxtLink>
+
       <NuxtLink
         v-for="p in prototypes"
         :key="p.id"

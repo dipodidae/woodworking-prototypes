@@ -32,6 +32,7 @@ Thumbs.db
 
 # Claude — keep shared skills/settings, ignore local-only overrides
 .claude/settings.local.json
+**/.claude/scheduled_tasks.lock
 
 # Playwright CLI artifacts (screenshots, logs, snapshots)
 .playwright-cli/

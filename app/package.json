@@ -3,12 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "preview": "nuxt preview",
+    "build": "nuxt build --dotenv .env.local",
+    "dev": "nuxt dev --dotenv .env.local",
+    "preview": "nuxt preview --dotenv .env.local",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "validate": "tsx scripts/validate-config.ts"
   },
   "dependencies": {
     "@iconify-json/lucide": "^1.2.102",
@@ -18,13 +19,15 @@
     "@tresjs/nuxt": "^5.6.0",
     "nuxt": "^4.4.2",
     "tailwindcss": "^4.2.2",
-    "three": "^0.184.0"
+    "three": "^0.184.0",
+    "vue": "^3.5.33"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
     "@playwright/test": "^1.59.1",
     "@types/three": "^0.184.0",
     "eslint": "^10.2.0",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.2",
     "vue-tsc": "^3.2.6"
   },

@@ -34,7 +34,10 @@ const SIZE = 0.1
           receive-shadow
         >
           <TresBoxGeometry :args="[SIZE, SIZE, SIZE]" />
-          <TresMeshStandardMaterial color="#deb887" :roughness="0.7" />
+          <TresMeshStandardMaterial
+            color="#deb887"
+            :roughness="0.7"
+          />
         </TresMesh>
 
         <TresMesh
@@ -42,7 +45,10 @@ const SIZE = 0.1
           receive-shadow
         >
           <TresPlaneGeometry :args="[2, 2]" />
-          <TresMeshStandardMaterial color="#1a1a1c" :roughness="1" />
+          <TresMeshStandardMaterial
+            color="#1a1a1c"
+            :roughness="1"
+          />
         </TresMesh>
       </TresCanvas>
     </ClientOnly>

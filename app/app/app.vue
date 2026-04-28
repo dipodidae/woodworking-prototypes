@@ -26,7 +26,10 @@ useSeoMeta({
   <UApp>
     <UHeader>
       <template #left>
-        <NuxtLink to="/" class="font-semibold tracking-tight">
+        <NuxtLink
+          to="/"
+          class="font-semibold tracking-tight"
+        >
           Woodworking
         </NuxtLink>
 
